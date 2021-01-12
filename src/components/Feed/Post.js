@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 
 import "./Post.css";
 
@@ -10,11 +10,11 @@ import ChatOutlinedIcon from "@material-ui/icons/ChatOutlined";
 import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
 import SendOutlinedIcon from "@material-ui/icons/SendOutlined";
 
-function Post({ name, desc, message, photoUrl }) {
+const Post = forwardRef(({ name, desc, message, photoUrl }, ref) => {
   return (
-    <div className="post">
+    <div ref={ref} className="post">
       <div className="post__header">
-        <Avatar />
+        <Avatar>{name[0]}</Avatar>
         <div className="post__info">
           <h2>{name}</h2>
           <p>{desc}</p>
@@ -31,6 +31,6 @@ function Post({ name, desc, message, photoUrl }) {
       </div>
     </div>
   );
-}
+});
 
 export default Post;

@@ -1,6 +1,11 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./Header.css";
+
+import { auth } from "../../firebase";
+import { logout } from "../../features/userSlice";
+import { selectUser } from "../../features/userSlice";
 
 import HeaderOption from "./HeaderOption";
 
@@ -13,6 +18,14 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 function Header() {
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  const logoutOfApp = () => {
+    dispatch(logout());
+    auth.signOut();
+  };
+
   return (
     <div className="header">
       <div className="header__left">
@@ -32,7 +45,11 @@ function Header() {
         <HeaderOption Icon={BusinessCenterIcon} title="job" />
         <HeaderOption Icon={ChatIcon} title="chat" />
         <HeaderOption Icon={NotificationsIcon} title="notification" />
-        <HeaderOption avatar={AccountCircleIcon} title="user_name" />
+        <HeaderOption
+          avatar={AccountCircleIcon}
+          title={user.displayName}
+          onClick={logoutOfApp}
+        />
       </div>
     </div>
   );
